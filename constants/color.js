@@ -1,0 +1,8 @@
+const COLORS ={
+    white : '#fff',
+    black : '#222222',
+    primary : '#007260',
+    secondary : '#39868D',
+    grey: '#CCCCCC',
+}
+export default COLORS;
