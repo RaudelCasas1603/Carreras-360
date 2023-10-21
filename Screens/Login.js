@@ -1,15 +1,65 @@
-import { View, Text, Image , Pressable, TextInput, TouchableOpacity } from 'react-native'
-import React, { useState } from 'react'
+import { View, Text, Image, Pressable, TextInput, TouchableOpacity } from 'react-native';
+import React, { useState } from 'react';
 import { SafeAreaView } from "react-native-safe-area-context";
 import COLORS from '../constants/color';
 import { Ionicons } from "@expo/vector-icons";
-import { CheckBox } from 'react-native-elements';
 import Button from '../components/Button';
+import { firebaseConfig } from '../firebase-config';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { initializeApp } from 'firebase/app';
+import { Alert } from 'react-native';
+
+// Importa las funciones necesarias de Firestore
+import { getFirestore, collection, doc, getDoc } from 'firebase/firestore';
 
 const Login = ({ navigation }) => {
     const [isPasswordShown, setIsPasswordShown] = useState(false);
     const [isChecked, setIsChecked] = useState(false);
-    
+
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    const handleLogin = () => {
+        signInWithEmailAndPassword(auth, email, password)
+            .then(async (userCredential) => {
+                const user = userCredential.user;
+                if (user) {
+                    // Usuario ha iniciado sesión, aquí puedes obtener su nombre desde Firestore
+                    const firestore = getFirestore(app);
+                    const userRef = doc(collection(firestore, 'users'), user.uid);
+
+                    try {
+                        const docSnap = await getDoc(userRef);
+                        if (docSnap.exists()) {
+                            const userData = docSnap.data();
+                            const userName = userData.name; // Asumiendo que el campo en Firestore se llama "nombre"
+
+                            console.log("Nombre del usuario:", userData);
+
+                            // Ahora navega a la pantalla "Welcome2" y pasa el nombre del usuario como parámetro
+                            navigation.navigate("Welcome2", { nombreUsuario: userName });
+                            console.log("Nombre del usuario:", userName);
+                        } else {
+                            console.log("El documento del usuario no existe en Firestore");
+                        }
+                    } catch (error) {
+                        console.error('Error al obtener información de Firestore:', error);
+                    }
+                } else {
+                    console.log("User is undefined");
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+                Alert.alert(error.message);
+            });
+    }
+
+
+
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
             <View style={{ flex: 1, marginHorizontal: 22 }}>
@@ -53,6 +103,7 @@ const Login = ({ navigation }) => {
                             style={{
                                 width: "100%"
                             }}
+                            onChangeText={setEmail}
                         />
                     </View>
                 </View>
@@ -81,6 +132,7 @@ const Login = ({ navigation }) => {
                             style={{
                                 width: "100%"
                             }}
+                            onChangeText={setPassword}
                         />
 
                         <TouchableOpacity
@@ -111,6 +163,7 @@ const Login = ({ navigation }) => {
                         marginTop: 18,
                         marginBottom: 4,
                     }}
+                    onPress={handleLogin}
                 />
 
                 <View style={{ flexDirection: 'row', alignItems: 'center', marginVertical: 20 }}>

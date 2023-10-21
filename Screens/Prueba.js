@@ -1,12 +1,12 @@
-import {View, Text, Pressable} from 'react-native';
+import {View, Text} from 'react-native';
 import React, { useState } from 'react';
 import {LinearGradient} from 'expo-linear-gradient';
 import COLORS from '../constants/color';
 import {Image} from 'react-native';
-import Button from '../components/Button';
 
 
-const Welcome = ( { navigation } ) => {
+const Welcome2 = ( { route } ) => {
+    const Usuario = route.params.nombreUsuario;
     return(
         <LinearGradient
         style={{
@@ -93,56 +93,17 @@ const Welcome = ( { navigation } ) => {
                         fontWeight: 'bold',
                         color: COLORS.white,
                         marginTop: 50
-                    }}>Vamos a </Text>
+                    }}>Bienvenido</Text>
                     <Text style={{
                         fontSize: 46,
                         fontWeight: 'bold',
                         color: COLORS.white
-                    }}>Comenzar</Text>
-                    <View style={{marginVertical: 22 }}>
-                        <Text style={{
-                            fontSize:16,
-                            color: COLORS.white,
-                            marginVertical:4,
-                        }}>Conecta con las opiniones de CUCEI</Text>
-                        <Text style={{
-                            fontSize:16,
-                            color: COLORS.white,
-                            marginBottom:50
-                        }}>Decide de manera acertada y segura</Text>
-                    </View>
-                    <Button
-                        title="Crear Cuenta"
-                        onPress={ () => navigation.navigate('SignUp')}
-                        style={{
-                            marginTop:22,
-                            width: "100%"
-                        }}
-                    />
-                    <View style={{
-                        flexDirection: "row",
-                        marginTop: 12,
-                        justifyContent: 'center'
-                    }}>
-                        <Text style ={{
-                           fontSize: 16,
-                            color: COLORS.white, 
-                        }}>Ya Tienes una cuenta?</Text>
-                        <Pressable
-                            onPress={ () => navigation.navigate('Login')}
-                        >
-                            <Text style={{
-                                fontSize: 16,
-                                fontWeight: 'bold',
-                                color: COLORS.white,
-                                marginLeft: 4
-                            }}>Login</Text>
-                        </Pressable>
-                    </View>
+                    }}> {Usuario}</Text>
+                   
                 </View>
             </View>       
         </LinearGradient>
     )
 }
 
-export default Welcome;
+export default Welcome2;

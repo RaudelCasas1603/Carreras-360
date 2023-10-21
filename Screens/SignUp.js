@@ -1,14 +1,57 @@
-import { View, Text, Image, Pressable, TextInput, TouchableOpacity } from 'react-native'
+import { View, Text, Image, Pressable, TextInput, TouchableOpacity, Alert } from 'react-native'
 import React, { useState } from 'react'
 import { SafeAreaView } from "react-native-safe-area-context";
 import COLORS from '../constants/color';
 import { Ionicons } from "@expo/vector-icons";
 import { CheckBox } from 'react-native-elements'; 
 import Button from '../components/Button';
+import { firebaseConfig } from '../firebase-config';
+import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import {initializeApp} from 'firebase/app';
+import { getFirestore, collection, doc, setDoc } from 'firebase/firestore';
+
 
 const Signup = ({ navigation }) => {
     const [isPasswordShown, setIsPasswordShown] = useState(false);
     const [isChecked, setIsChecked] = useState(false);
+    
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [name, setName] = useState('');
+    
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const firestore = getFirestore(app);
+
+
+    const handleCreateAccount = () => {
+        createUserWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                console.log("User created!");
+                const user = userCredential.user;
+                const { uid } = user
+
+                setDoc(doc(collection(firestore, 'users'), uid), {
+                    email,
+                    name,
+                    uid
+                })
+                .then(() => {
+                    Alert.alert("Usuario creado correctamente");
+                    console.log(nombre);
+                })
+                navigation.navigate("Ocupacion", {ID: uid});
+                
+            })
+            .catch((error) => {
+                console.log(error);
+                Alert.alert(error.message);
+            });
+
+
+    }
+
+    
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
             <View style={{ flex: 1, marginHorizontal: 22 }}>
@@ -52,6 +95,7 @@ const Signup = ({ navigation }) => {
                             style={{
                                 width: "100%"
                             }}
+                            onChangeText={setEmail}
                         />
                     </View>
                 </View>
@@ -61,7 +105,7 @@ const Signup = ({ navigation }) => {
                         fontSize: 16,
                         fontWeight: 400,
                         marginVertical: 8
-                    }}>Numero de Telefono </Text>
+                    }}>Nombre </Text>
 
                     <View style={{
                         width: "100%",
@@ -74,26 +118,17 @@ const Signup = ({ navigation }) => {
                         justifyContent: "space-between",
                         paddingLeft: 22
                     }}>
-                        <TextInput
-                            placeholder='+52'
-                            placeholderTextColor={COLORS.black}
-                            keyboardType='numeric'
-                            style={{
-                                width: "12%",
-                                borderRightWidth: 1,
-                                borderLeftColor: COLORS.grey,
-                                height: "100%"
-                            }}
-                        />
 
-                        <TextInput
-                            placeholder='Ingrese su numero de telefono'
-                            placeholderTextColor={COLORS.black}
-                            keyboardType='numeric'
-                            style={{
-                                width: "80%"
-                            }}
-                        />
+                    <TextInput
+                        placeholder='Ingrese su nombre'
+                        placeholderTextColor={COLORS.black}
+                        keyboardType='default'
+                        style={{
+                            width: "80%"
+                        }}
+                        onChangeText={setName}
+                    />
+
                     </View>
                 </View>
 
@@ -121,6 +156,7 @@ const Signup = ({ navigation }) => {
                             style={{
                                 width: "100%"
                             }}
+                            onChangeText={setPassword}
                         />
 
                         <TouchableOpacity
@@ -164,6 +200,7 @@ const Signup = ({ navigation }) => {
                         marginTop: 18,
                         marginBottom: 4,
                     }}
+                    onPress={handleCreateAccount}
                 />
 
                 <View style={{ flexDirection: 'row', alignItems: 'center', marginVertical: 20 }}>
