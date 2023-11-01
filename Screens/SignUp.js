@@ -30,13 +30,11 @@ const Signup = ({ navigation }) => {
                 console.log("User created!");
                 const user = userCredential.user;
                 const { uid } = user
-                console.log("nombre mio"+name);
                 var xhttp = new XMLHttpRequest();
                     xhttp.onreadystatechange = function () {
                     if (this.readyState == 4 && this.status == 200) {
                         let resultado = xhttp.responseText;
-                        console.log("Response from server: " + resultado);
-                        alert("Received response: " + resultado);
+                        console.log(resultado);
                     }
                     };
                     xhttp.open("GET", "https://carreras360.000webhostapp.com/Access/SignIn.php?nombre="+name, true);

@@ -13,14 +13,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $query = mysqli_query($conn, $sql);
 
     if ($query) {
-        $resultado = "¡Registro exitoso!"; // Change the success message
-        echo $resultado;
+        $lastInsertID = mysqli_insert_id($conn); // Get the last inserted ID
+        echo $lastInsertID;
     } else {
         $resultado = "Error al insertar los datos, intenta de nuevo";
         echo $resultado;
     }
-    
 } else {
-    echo "Solicitud no válida"; // Opcional: mensaje de error si no se recibe una solicitud GET
+    echo "Solicitud no válida"; // Opcional: mensaje de error if no valid GET request
 }
 ?>
