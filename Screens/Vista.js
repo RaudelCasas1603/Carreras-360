@@ -45,7 +45,7 @@ const Ocupacion = ( { route }) => {
 
   return (
     <ScrollView style={styles.container}>
-      <Text>Seleccione su Estado:</Text>
+      <Text style={styles.title}>Seleccione su Estado:</Text>
       <View style={styles.grid}>
         <TouchableOpacity
           style={[styles.option, estatus === 'Estudiante' && styles.selected]}
@@ -69,42 +69,48 @@ const Ocupacion = ( { route }) => {
         </TouchableOpacity>
       </View>
 
-      <Text>Seleccione su Centro Universitario de Interés:</Text>
+      <Text style={styles.title}>Seleccione su Centro Universitario de Interés:</Text>
       <View style={styles.grid}>
         <TouchableOpacity
-          style={[styles.option, preferencia === 'CUCEI' && styles.selected]}
-          onPress={() => handlePreferenciaPress('CUCEI')}
+          style={[styles.option, preferencia === 'Ingeneria Informatica' && styles.selected]}
+          onPress={() => handlePreferenciaPress('Ingeneria Informatica')}
         >
-          <Text style={styles.text}>CUCEI</Text>
+          <Text style={styles.text}>Ingeneria Informatica</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
-          style={[styles.option, preferencia === 'CUCEA' && styles.selected]}
-          onPress={() => handlePreferenciaPress('CUCEA')}
+          style={[styles.option, preferencia === 'Ingeneria en Computación' && styles.selected]}
+          onPress={() => handlePreferenciaPress('Ingeneria en Computación')}
         >
-          <Text style={styles.text}>CUCEA</Text>
+          <Text style={styles.text}>Ingeneria en Computación</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
-          style={[styles.option, preferencia === 'CUCS' && styles.selected]}
-          onPress={() => handlePreferenciaPress('CUCS')}
+          style={[styles.option, preferencia === 'Ingeneria Biomedica' && styles.selected]}
+          onPress={() => handlePreferenciaPress('Ingeneria Biomedica')}
         >
-          <Text style={styles.text}>CUCS</Text>
+          <Text style={styles.text}>Ingeneria Biomedica</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={[styles.option, preferencia === 'CUAAD' && styles.selected]}
-          onPress={() => handlePreferenciaPress('CUAAD')}
+          style={[styles.option, preferencia === 'Ingeneria en Robotica' && styles.selected]}
+          onPress={() => handlePreferenciaPress('Ingeneria en Robotica')}
         >
-          <Text style={styles.text}>CUAAD</Text>
+          <Text style={styles.text}>Ingeneria en Robotica</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={[styles.option, preferencia === 'CUCBA' && styles.selected]}
-          onPress={() => handlePreferenciaPress('CUCBA')}
+          style={[styles.option, preferencia === 'Ingeneria Civil' && styles.selected]}
+          onPress={() => handlePreferenciaPress('Ingeneria Civil')}
         >
-          <Text style={styles.text}>CUCBA</Text>
+          <Text style={styles.text}>Ingeneria Civil</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.option, preferencia === 'Ingeneria Industrial' && styles.selected]}
+          onPress={() => handlePreferenciaPress('Ingeneria Industrial')}
+        >
+          <Text style={styles.text}>Ingeneria Industrial</Text>
         </TouchableOpacity>
       </View>
-      <Button title="Registrarse" onPress={handleRegistro} />
+      <Button title="Terminar Registro" onPress={handleRegistro} />
     </ScrollView>
   );
 };
@@ -136,6 +142,11 @@ const styles = StyleSheet.create({
   text: {
     textAlign: 'center',
     fontSize: 16,
+  },
+  title:{
+    textAlign: 'center',
+    fontSize: 20,
+    fontWeight: 'bold',
   }
 });
 

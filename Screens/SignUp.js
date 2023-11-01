@@ -8,7 +8,7 @@ import Button from '../components/Button';
 import { firebaseConfig } from '../firebase-config';
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 import {initializeApp} from 'firebase/app';
-import { getFirestore, collection, doc, setDoc } from 'firebase/firestore';
+
 
 
 const Signup = ({ navigation }) => {
@@ -18,10 +18,10 @@ const Signup = ({ navigation }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [name, setName] = useState('');
+
     
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
-    const firestore = getFirestore(app);
 
 
     const handleCreateAccount = () => {
@@ -30,16 +30,17 @@ const Signup = ({ navigation }) => {
                 console.log("User created!");
                 const user = userCredential.user;
                 const { uid } = user
-
-                setDoc(doc(collection(firestore, 'users'), uid), {
-                    email,
-                    name,
-                    uid
-                })
-                .then(() => {
-                    Alert.alert("Usuario creado correctamente");
-                    console.log(nombre);
-                })
+                console.log("nombre mio"+name);
+                var xhttp = new XMLHttpRequest();
+                    xhttp.onreadystatechange = function () {
+                    if (this.readyState == 4 && this.status == 200) {
+                        let resultado = xhttp.responseText;
+                        console.log("Response from server: " + resultado);
+                        alert("Received response: " + resultado);
+                    }
+                    };
+                    xhttp.open("GET", "https://carreras360.000webhostapp.com/Access/SignIn.php?nombre="+name, true);
+                    xhttp.send();
                 navigation.navigate("Ocupacion", {ID: uid});
                 
             })
@@ -137,7 +138,7 @@ const Signup = ({ navigation }) => {
                         fontSize: 16,
                         fontWeight: 400,
                         marginVertical: 8
-                    }}>Constraseña</Text>
+                    }}>Contraseña</Text>
 
                     <View style={{
                         width: "100%",
