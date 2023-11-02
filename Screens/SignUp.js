@@ -29,26 +29,25 @@ const Signup = ({ navigation }) => {
             .then((userCredential) => {
                 console.log("User created!");
                 const user = userCredential.user;
-                const { uid } = user
+                const { uid } = user;
                 var xhttp = new XMLHttpRequest();
-                    xhttp.onreadystatechange = function () {
+                xhttp.onreadystatechange = function () {
                     if (this.readyState == 4 && this.status == 200) {
                         let resultado = xhttp.responseText;
                         console.log(resultado);
+                        // Pass resultado to the "Ocupacion" screen
+                        navigation.navigate("Ocupacion", { ID: uid, resultado });
                     }
-                    };
-                    xhttp.open("GET", "https://carreras360.000webhostapp.com/Access/SignIn.php?nombre="+name, true);
-                    xhttp.send();
-                navigation.navigate("Ocupacion", {ID: uid});
-                
+                };
+                xhttp.open("GET", "https://carreras360.000webhostapp.com/Access/SignIn.php?nombre=" + name +"&correo=" + email, true);
+                xhttp.send();
             })
             .catch((error) => {
                 console.log(error);
                 Alert.alert(error.message);
             });
-
-
     }
+    
 
     
     return (

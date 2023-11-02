@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 import Button from '../components/Button';
-import { getFirestore, doc, updateDoc } from 'firebase/firestore';
+
 
 const Ocupacion = ( { route }) => {
-  const Usuario = route.params.ID;
+  const Usuario = route.params.resultado;
   const [estatus, setEstatus] = useState('');
   const [preferencia, setPreferencia] = useState('');
 
@@ -27,20 +27,21 @@ const Ocupacion = ( { route }) => {
   const handleRegistro = async () => {
     console.log('Estatus:', estatus);
     console.log('Preferencia:', preferencia);
-
-    const db = getFirestore();
-    const userDocRef = doc(db, 'users', Usuario);
-    const dataToUpdate = {
-      estatus: estatus,
-      preferencia: preferencia,
+    var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+          let resultado = xhttp.responseText;
+          if(resultado == "1"){
+            alert("Registro Exitoso");
+          }else{
+            alert("Error al Registrar");
+          }
+          // Pass resultado to the "Ocupacion" screen
+          }
     };
+      xhttp.open("GET", "https://carreras360.000webhostapp.com/Access/register.php?id="+Usuario+"&ocupacion="+estatus+"&carrera="+preferencia, true);
+      xhttp.send();
 
-    try {
-      await updateDoc(userDocRef, dataToUpdate);
-      console.log('Document successfully updated!');
-    }catch (error) {
-      console.error('Error updating document: ', error);
-    }
   };
 
   return (

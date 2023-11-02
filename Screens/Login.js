@@ -10,14 +10,14 @@ import { initializeApp } from 'firebase/app';
 import { Alert } from 'react-native';
 
 // Importa las funciones necesarias de Firestore
-import { getFirestore, collection, doc, getDoc } from 'firebase/firestore';
+
 
 const Login = ({ navigation }) => {
     const [isPasswordShown, setIsPasswordShown] = useState(false);
-    const [isChecked, setIsChecked] = useState(false);
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [id, setId] = useState('');
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
@@ -27,27 +27,20 @@ const Login = ({ navigation }) => {
             .then(async (userCredential) => {
                 const user = userCredential.user;
                 if (user) {
-                    // Usuario ha iniciado sesión, aquí puedes obtener su nombre desde Firestore
-                    const firestore = getFirestore(app);
-                    const userRef = doc(collection(firestore, 'users'), user.uid);
-
-                    try {
-                        const docSnap = await getDoc(userRef);
-                        if (docSnap.exists()) {
-                            const userData = docSnap.data();
-                            const userName = userData.name; // Asumiendo que el campo en Firestore se llama "nombre"
-
-                            console.log("Nombre del usuario:", userData);
-
-                            // Ahora navega a la pantalla "Welcome2" y pasa el nombre del usuario como parámetro
-                            navigation.navigate("Welcome2", { nombreUsuario: userName });
-                            console.log("Nombre del usuario:", userName);
-                        } else {
-                            console.log("El documento del usuario no existe en Firestore");
+                    // Usuario ha iniciado sesión, puedes realizar otras acciones aquí
+                    console.log("Inicio de sesión exitoso para el usuario:", user.email);
+                    var xhttp = new XMLHttpRequest();
+                    xhttp.onreadystatechange = function () {
+                        if (this.readyState == 4 && this.status == 200) {
+                            let resultado = xhttp.responseText;
+                            setId(resultado);
+                            console.log(resultado);
                         }
-                    } catch (error) {
-                        console.error('Error al obtener información de Firestore:', error);
-                    }
+                    };
+                    xhttp.open("GET", "https://carreras360.000webhostapp.com/Access/login.php?correo=" + email, true);
+                    xhttp.send();
+                
+                    // Navega a la pantalla que desees después del inicio de sesión
                 } else {
                     console.log("User is undefined");
                 }
