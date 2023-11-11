@@ -31,11 +31,7 @@ const Ocupacion = ( { route }) => {
       xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
           let resultado = xhttp.responseText;
-          if(resultado == "1"){
-            alert("Registro Exitoso");
-          }else{
-            alert("Error al Registrar");
-          }
+          console.log(resultado);
           // Pass resultado to the "Ocupacion" screen
           }
     };

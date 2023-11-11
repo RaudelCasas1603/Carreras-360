@@ -8,6 +8,7 @@ import { firebaseConfig } from '../firebase-config';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { initializeApp } from 'firebase/app';
 import { Alert } from 'react-native';
+import { useAuth } from '../AuthContext';
 
 // Importa las funciones necesarias de Firestore
 
@@ -18,6 +19,7 @@ const Login = ({ navigation }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [id, setId] = useState('');
+    const { updateUserId } = useAuth();
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
@@ -33,13 +35,14 @@ const Login = ({ navigation }) => {
                     xhttp.onreadystatechange = function () {
                         if (this.readyState == 4 && this.status == 200) {
                             let resultado = xhttp.responseText;
-                            setId(resultado);
+                            updateUserId(resultado);
                             console.log(resultado);
                         }
                     };
                     xhttp.open("GET", "https://carreras360.000webhostapp.com/Access/login.php?correo=" + email, true);
                     xhttp.send();
-                
+                    navigation.navigate("TabNavigation");
+                    
                     // Navega a la pantalla que desees después del inicio de sesión
                 } else {
                     console.log("User is undefined");
@@ -49,7 +52,7 @@ const Login = ({ navigation }) => {
                 console.log(error);
                 Alert.alert(error.message);
             });
-    }
+    };
 
 
 
