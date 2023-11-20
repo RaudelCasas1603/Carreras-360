@@ -16,11 +16,17 @@ const TabNavigation = () => {
                 tabBarStyle: [{ display: 'flex'}, null], // Set the style of the bottom tab bar
             }}
         >
-            <Tab.Screen name="Home" component={Home} options={{
+            <Tab.Screen name="Feed" component={Home} options={{
                 tabBarIcon: ({ tintColor }) => (
                     <FontAwesome name="home" size={24} color="black" />
                 ),
-                headerShown: false
+                headerShown: true,
+                headerStyle: {
+                    backgroundColor: COLORS.primary,
+                },
+                headerTitleStyle:{
+                    color: 'white'
+                }
             }}
             />
             <Tab.Screen
@@ -34,9 +40,9 @@ const TabNavigation = () => {
                     tabBarLabel: () => null, // Set tabBarLabel to null to hide the label
                 }}
             />
-            <Tab.Screen name="Settings" component={Settings} options={{
+            <Tab.Screen name="About Me" component={Settings} options={{
                 tabBarIcon: ({ tintColor }) => (
-                    <Ionicons name="settings" size={24} color="black" />
+                    <FontAwesome name="user" size={24} color="black" />
                 ),
                 headerShown: false
             }} />

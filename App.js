@@ -23,7 +23,7 @@ function MainApp() {
   return (
     <NavigationContainer>
       <StatusBar style="light" backgroundColor={COLORS.primary} />
-      <Stack.Navigator initialRouteName="TabNavigation">
+      <Stack.Navigator initialRouteName="Welcome">
         <Stack.Screen
           name="Welcome"
           component={Welcome}

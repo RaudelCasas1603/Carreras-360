@@ -18,7 +18,6 @@ const Login = ({ navigation }) => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [id, setId] = useState('');
     const { updateUserId } = useAuth();
 
     const app = initializeApp(firebaseConfig);

@@ -46,12 +46,12 @@ const CreatePost = () => {
           onValueChange={(itemValue, itemIndex) => setCarrera(itemValue)}
         >
           <Picker.Item label="Selecciona tu carrera" value="" />
-          <Picker.Item label="Ingeneria Informatica" value= '1' />
-          <Picker.Item label="Ingeneria en Computación" value='2' />
-          <Picker.Item label="Ingeneria Biomedica" value='3' />
-          <Picker.Item label="Ingeneria en Robotica" value='4' />
-          <Picker.Item label="Ingeneria Civil" value='5' />
-          <Picker.Item label="Ingeneria Industrial" value='6' />
+          <Picker.Item label="Ingeneria Informatica" value= "Ingeneria Informatica"/>
+          <Picker.Item label="Ingeneria en Computación" value= "Ingeneria en Computacion" />
+          <Picker.Item label="Ingeneria Biomedica" value= "Ingeneria Biomedica" />
+          <Picker.Item label="Ingeneria en Robotica" value= "Ingeneria en Robotica" />
+          <Picker.Item label="Ingeneria Civil" value= "Ingeneria Civil" />
+          <Picker.Item label="Ingeneria Industrial" value="Ingeneria Industrial" />
           {/* Agrega más carreras según sea necesario */}
         </Picker>
       </View>
@@ -75,14 +75,16 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
+    backgroundColor: COLORS.white,
   },
   input: {
-    height: 100,
+    height: 90,
     borderColor: 'gray',
     borderWidth: 1,
     marginBottom: 16,
     padding: 8,
     marginTop: 30,
+    borderRadius: 8,
   },
   pickerContainer: {
     borderColor: 'gray',

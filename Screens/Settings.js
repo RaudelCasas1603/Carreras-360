@@ -7,21 +7,25 @@ import { Ionicons } from '@expo/vector-icons'; // Agrega la importación del com
 
 export default function Settings() {
     const [userInfo, setUserInfo] = useState(null);
-    const { userId } = useAuth();
+    const { userId, userCarreer, updateUserId, updateUserCarreer } = useAuth();
+
 
     useEffect(() => {
         // Función para cargar la información del usuario
         const loadInfo = async () => {
             try {
-                const response = await fetch('https://carreras360.000webhostapp.com/loadInfo.php?id=15');
+                const response = await fetch('https://carreras360.000webhostapp.com/loadInfo.php?id='+ userId);
                 const data = await response.json();
 
                 // Actualizar el estado con la información del usuario
                 setUserInfo(data);
+                updateUserCarreer(data.Carrera);
             } catch (error) {
                 console.error('Error al cargar la información del usuario:', error);
             }
         };
+
+        
 
         // Llamar a la función para cargar la información del usuario al montar el componente
         loadInfo();
